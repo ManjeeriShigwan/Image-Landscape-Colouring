@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+{%if message%}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong> {{message}}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+{%endif%}
+<form action="{{ url_for('uploadImage') }}" method="post" enctype = "multipart/form-data">
+    
+    <h1 style="padding: 10px;">Black and white Image to colour</h1>
+
+    <div class="container col-md-6 p-5">
+        <div class="mb-5">
+            <input class="form-control" type="file" id="formFile" name="formFile" onchange="preview()">
+            <button type="button" onclick="clearImage()" class="btn btn-primary mt-3">Clear Image</button>
+            <button type="submit" class="btn btn-primary mt-3">Colour Image</button>
+        </div>
+        <img id="frame" src="{{image}}" class="img-fluid" />
+    </div>
+
+</form>
+
+{%endblock%}
+{%block scripts%}
+<script>
+
+    function preview() {
+                frame.src = URL.createObjectURL(event.target.files[0]);
+            }
+            function clearImage() {
+                document.getElementById('formFile').value = null;
+                frame.src = "";
+            }
+</script>
+{%endblock%}
